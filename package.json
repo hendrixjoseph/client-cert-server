@@ -1,0 +1,13 @@
+{
+  "name": "client-cert-server",
+  "version": "1.0.0",
+  "description": "a test server that requires a client certificate",
+  "author": "Joseph Hendrix",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
