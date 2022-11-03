@@ -9,18 +9,39 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
+  console.log('request received');
+  console.log(req);
+
+  var cache = [];
+  let requestString = JSON.stringify(req.client, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      // Duplicate reference found, discard key
+      if (cache.includes(value)) {
+        return '...';
+      }
+
+      // Store value in our collection
+      cache.push(value);
+    }
+    return value;
+  }, 2);
+  cache = null;
+
+  res.setHeader('Content-Type', 'application/json');
+
   if (!req.client.authorized) {
-    return res.status(401).send('Invalid client certificate authentication.');
+    return res.status(401).send('Invalid client certificate authentication:' + requestString);
   }
 
-  return res.send('Hello, world!');
+  return res.send('Client certificate! ' + requestString);
 });
 
 https.createServer({
     requestCert: true,
     rejectUnauthorized: false,
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem"),
+    ca: fs.readFileSync('ca.crt'),
+    key: fs.readFileSync("server.key"),
+    cert: fs.readFileSync("server.crt"),
   },
   app
 ).listen(PORT, () => {
