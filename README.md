@@ -26,3 +26,13 @@ Run `npm install`:
 Start the server:
 
   node index.js
+
+If you want to verify the certificates:
+
+Verify server certificate:
+
+  openssl verify -CAfile ca.crt server.crt
+
+Verify client certificate:
+
+  openssl verify -CAfile ca.crt client.crt
