@@ -1,38 +1,38 @@
-Build & Run the Docker container:
+## Build & Run the Docker container:
 
-  docker build . -f nodejs.dockerfile -t joehx/client-cert-server
-  docker run -p 80:80 -p 443:443 -d joehx/client-cert-server
+    docker build . -f nodejs.dockerfile -t joehx/client-cert-server
+    docker run -p 80:80 -p 443:443 -d joehx/client-cert-server
 
-Copy out the client certificates:
+## Copy out the client certificates:
 
-  docker cp vigorous_hodgkin:/usr/src/app/client.key ./
-  docker cp vigorous_hodgkin:/usr/src/app/client.crt ./
-  docker cp vigorous_hodgkin:/usr/src/app/client.pfx ./
+    docker cp vigorous_hodgkin:/usr/src/app/client.key ./
+    docker cp vigorous_hodgkin:/usr/src/app/client.crt ./
+    docker cp vigorous_hodgkin:/usr/src/app/client.pfx ./
 
-Alternatively, just run as a Node JS server:
+## Alternatively, just run as a Node JS server:
 
-Make `create-certs.sh` executable:
+### Make `create-certs.sh` executable:
 
-  chmod u+x create-certs.sh
+    chmod u+x create-certs.sh
 
-Run `create-certs.sh`:
+### Run `create-certs.sh`:
 
-  ./create-certs.sh
+    ./create-certs.sh
 
-Run `npm install`:
+### Run `npm install`:
 
-  npm install
+    npm install
 
-Start the server:
+### Start the server:
 
-  node index.js
+    node index.js
 
-If you want to verify the certificates:
+## If you want to verify the certificates:
 
-Verify server certificate:
+### Verify server certificate:
 
-  openssl verify -CAfile ca.crt server.crt
+    openssl verify -CAfile ca.crt server.crt
 
-Verify client certificate:
+### Verify client certificate:
 
-  openssl verify -CAfile ca.crt client.crt
+    openssl verify -CAfile ca.crt client.crt
