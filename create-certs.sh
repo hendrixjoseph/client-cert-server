@@ -10,5 +10,5 @@ openssl x509 -req -days 9999 -in server.csr -CA ca.crt -CAkey ca.key -CAcreatese
 
 # client
 openssl genrsa -out client.key 4096
-openssl req -new -key client.key -out client.csr -subj "/C=US/ST=Ohio/L=JoeHx/O=JoeHx/OU=JoeHx/CN=example.com" -passout pass:password
+openssl req -new -key client.key -out client.csr -subj "/C=US/ST=Ohio/L=JoeHx/O=JoeHx/OU=JoeHx/CN=client" -passout pass:password
 openssl x509 -req -days 9999 -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -passin pass:password
