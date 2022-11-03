@@ -12,9 +12,12 @@ app.get('/', (req, res) => {
   console.log('request received');
   console.log(req);
 
-  var cache = [];
-  let requestString = JSON.stringify(req.client, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
+  let cache = [];
+
+  let r = (key, value) => {
+    if (key === 'data') {
+      return JSON.stringify(value);
+    } else if (typeof value === 'object' && value !== null) {
       // Duplicate reference found, discard key
       if (cache.includes(value)) {
         return '...';
@@ -24,7 +27,9 @@ app.get('/', (req, res) => {
       cache.push(value);
     }
     return value;
-  }, 2);
+  };
+
+  let requestString = JSON.stringify(req.client, r, 2);
   cache = null;
 
   res.setHeader('Content-Type', 'application/json');
